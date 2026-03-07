@@ -46,7 +46,7 @@ Our main audience includes:
 - Ikechukwu Ogowuihe  
 - Emmanuel Dairo
 
-# Project Status 🟡
+# Project Status 🟢
 
 We are officially in the Construction Phase, working towards building our code and system architecture.
 
