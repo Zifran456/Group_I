@@ -49,3 +49,5 @@ Our main audience includes:
 # Project Status 🟡
 
 We are officially in the Construction Phase, working towards building our code and system architecture.
+
+![gifconstructionphase](https://github.com/user-attachments/assets/4812733e-cf6e-4199-89da-c538d0ac27b4)
