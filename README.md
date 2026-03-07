@@ -10,7 +10,7 @@ This repository contains all documents relating to the ENSE 281 Group Project do
 
 This web application aims to reduce household food waste and aid in decision making by creating a system that provides its users with various recipes and the tools to track of food inventory whilst alerting them to food expiration dates and period.
 
-## Business Opportunity 📍
+# Business Opportunity 📍
 
 The project will allow users to keep track of their food inventory and give user access to a variety of recipes based off said inventory, hence, assisting the users decison making on what to eat. Users will be able to adequately plan meals and maintain awareness of the quality of food in their inventory whilst also cutting food wastage and cost, eating better and healthier.
 
