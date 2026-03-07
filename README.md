@@ -50,4 +50,4 @@ Our main audience includes:
 
 We are officially in the Construction Phase, working towards building our code and system architecture.
 
-![gifconstructionphase](https://github.com/user-attachments/assets/4812733e-cf6e-4199-89da-c538d0ac27b4)
+![gifconstructionphase](https://github.com/user-attachments/assets/4b074b0c-23bf-4ffa-a3b0-3985e4a41566)
