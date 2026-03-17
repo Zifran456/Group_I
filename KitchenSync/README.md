@@ -54,15 +54,6 @@ index.html (Welcome)
 - **Vanilla JavaScript** - Interactivity (in `js/app.js`)
 
 ## Key Features Working Right Now
-- Navigation between all pages (links/buttons)
-- Filter tabs on dashboard (All / Expired / Expiring Soon / Low Stock)
-- Quantity +/- buttons on Add Item page
-- Storage assignment toggle buttons on Add Item page
-- Form validation (login + add item)
-- Search filtering on recipe and storage pages
-- Fully responsive layout (mobile, tablet, and desktop)
-- Items and recipe cards reflow into 2-column (tablet) and 3-column (desktop) grids
-- KS logo appears on Welcome and Dashboard pages only
 
 ## Colors Used (from our Figma design)
 - Background cream: `#F5F0E1`
