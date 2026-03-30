@@ -18,7 +18,7 @@
   >
 
   <!-- Our Custom CSS -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -26,13 +26,19 @@
 
     <!-- ========== HEADER ========== -->
     <div class="inner-header">
-      <a href="dashboard.html" class="back-link">
+      <a href="/dashboard" class="back-link">
         <i class="bi bi-arrow-left"></i> Back
       </a>
       <span></span>
-      <a href="dashboard.html" class="home-link">
+      <a href="/dashboard" class="home-link">
         <i class="bi bi-house-fill"></i>
       </a>
+    </div>
+
+    <!-- ========== PAGE TITLE ========== -->
+    <div class="page-header mb-3">
+      <h2>Liked Recipes</h2>
+      <p class="text-muted">Your saved favorite recipes</p>
     </div>
 
     <!-- ========== SEARCH BAR ========== -->
@@ -62,83 +68,50 @@
     <div class="recipe-list" id="likedRecipeList">
       <div class="recipe-grid">
 
-        <!-- Pie -->
-        <div class="recipe-card searchable-item">
-          <div class="recipe-card-image">
-            <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
+        <% if (!likedRecipes || likedRecipes.length === 0) { %>
+          <div class="w-100 text-center py-5">
+            <i class="bi bi-heart" style="font-size: 3rem; color: #ccc;"></i>
+            <h4 class="mt-3">No liked recipes yet</h4>
+            <p class="text-muted">Recipes you save or like will appear here.</p>
           </div>
-          <div class="recipe-card-info">
-            <h5>Pie</h5>
-            <p>2 recipes</p>
-            <a href="#" class="btn-learn-more">Learn more</a>
-          </div>
-        </div>
+        <% } else { %>
 
-        <!-- Fries -->
-        <div class="recipe-card searchable-item">
-          <div class="recipe-card-image">
-            <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
-          </div>
-          <div class="recipe-card-info">
-            <h5>Fries</h5>
-            <p>2 recipes</p>
-            <a href="#" class="btn-learn-more">Learn more</a>
-          </div>
-        </div>
+          <% likedRecipes.forEach(recipe => { %>
+            <div class="recipe-card searchable-item">
+              <div class="recipe-card-image">
+                <% if (recipe.image) { %>
+                  <img 
+                    src="<%= recipe.image %>" 
+                    alt="<%= recipe.title %>"
+                    style="width:100%; height:100%; object-fit:cover;"
+                  >
+                <% } else { %>
+                  <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
+                <% } %>
+              </div>
 
-        <!-- Chicken -->
-        <div class="recipe-card searchable-item">
-          <div class="recipe-card-image">
-            <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
-          </div>
-          <div class="recipe-card-info">
-            <h5>Chicken</h5>
-            <p>2 recipes</p>
-            <a href="#" class="btn-learn-more">Learn more</a>
-          </div>
-        </div>
+              <div class="recipe-card-info">
+                <h5><%= recipe.title %></h5>
 
-        <!-- Bacon -->
-        <div class="recipe-card searchable-item">
-          <div class="recipe-card-image">
-            <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
-          </div>
-          <div class="recipe-card-info">
-            <h5>Bacon</h5>
-            <p>1 recipe</p>
-            <a href="#" class="btn-learn-more">Learn more</a>
-          </div>
-        </div>
+                <% if (recipe.ingredients && recipe.ingredients.length > 0) { %>
+                  <p><%= recipe.ingredients.slice(0, 3).join(", ") %><%= recipe.ingredients.length > 3 ? "..." : "" %></p>
+                <% } else { %>
+                  <p>Saved recipe</p>
+                <% } %>
 
-        <!-- Blue Cheese -->
-        <div class="recipe-card searchable-item">
-          <div class="recipe-card-image">
-            <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
-          </div>
-          <div class="recipe-card-info">
-            <h5>Blue Cheese</h5>
-            <p>2 recipes</p>
-            <a href="#" class="btn-learn-more">Learn more</a>
-          </div>
-        </div>
+                <a href="/recipes/<%= recipe._id %>" class="btn-learn-more">Learn more</a>
+              </div>
+            </div>
+          <% }) %>
 
-        <!-- Tofu -->
-        <div class="recipe-card searchable-item">
-          <div class="recipe-card-image">
-            <i class="bi bi-image" style="font-size:2rem; color:#CCC;"></i>
-          </div>
-          <div class="recipe-card-info">
-            <h5>Tofu</h5>
-            <p>1 recipe</p>
-            <a href="#" class="btn-learn-more">Learn more</a>
-          </div>
-        </div>
+        <% } %>
 
       </div>
       <!-- End recipe-grid -->
 
-      <!-- Load More Button -->
-      <button class="btn-load-more">Load more</button>
+      <% if (likedRecipes && likedRecipes.length > 0) { %>
+        <button class="btn-load-more">Load more</button>
+      <% } %>
 
     </div>
     <!-- End Liked Recipe List -->
@@ -152,7 +125,7 @@
   </script>
 
   <!-- Our Custom JS -->
-  <script src="js/app.js"></script>
+  <script src="/js/app.js"></script>
 
 </body>
 </html>

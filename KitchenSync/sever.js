@@ -50,6 +50,10 @@ const recipeSchema = new mongoose.Schema({
     default: "manual"
   },
   username: String,
+  liked: {
+  type: Boolean,
+  default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -90,9 +94,7 @@ app.get("/add-item", (req, res) => {
   res.render("add-item");
 });
 
-app.get("/liked-recipes", (req, res) => {
-  res.render("liked-recipes");
-});
+
 app.get("/add-recipe", (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/");
@@ -446,15 +448,15 @@ app.get("/liked-recipes", async (req, res) => {
   }
 
   try {
-    const recipes = await Recipe.find({ username: req.user.username }).sort({ createdAt: -1 });
-
-    res.render("liked-recipes", {
+    const likedRecipes = await Recipe.find({
       username: req.user.username,
-      recipes: recipes
+      liked: true
     });
+
+    res.render("liked-recipes", { likedRecipes: likedRecipes });
   } catch (err) {
     console.log(err);
-    res.send("Error loading liked recipes");
+    res.render("liked-recipes", { likedRecipes: [] });
   }
 });
 
