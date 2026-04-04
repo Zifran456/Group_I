@@ -1,13 +1,13 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const session = require("express-session");
-const passport = require("passport");
-const passportLocalMongoose = require("passport-local-mongoose").default;
-const axios = require("axios");
-const app = express();
+const express = require("express"); // Declared express in the file
+const mongoose = require("mongoose"); // Decalred mongoose in the file
+const session = require("express-session"); //Decalred session to help remeber log in
+const passport = require("passport"); // utilized passport for easy authentication
+const passportLocalMongoose = require("passport-local-mongoose").default; //
+const axios = require("axios");// Imported axios in other to utilize api
+const app = express(); 
 const port = 3000;
-require("dotenv").config(); 
-app.set("view engine", "ejs");
+require("dotenv").config();  
+app.set("view engine", "ejs"); // We utilized ejs because html is static 
 app.use("/css", express.static("css"));
 app.use("/js", express.static("js"));
 
@@ -23,12 +23,14 @@ app.use(session({
 
 mongoose.connect("mongodb://127.0.0.1:27017/kitchensync").then(() => console.log("MongoDB connected"));
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema // Decalred user schema
+({
   username: String,
  
 });
 
-const foodSchema = new mongoose.Schema({
+const foodSchema = new mongoose.Schema // Decalred food schema
+({
   name:String,
   quantity:Number,
   expiryDate: Date, 
@@ -39,7 +41,8 @@ const foodSchema = new mongoose.Schema({
   imageUrl:String
 
 });
-const recipeSchema = new mongoose.Schema({
+const recipeSchema = new mongoose.Schema // Declared recipe schema
+({
   title: String,
   image: String,
   instructions: String,
@@ -102,6 +105,8 @@ app.get("/add-recipe", (req, res) => {
 
   res.render("add-recipe");
 });
+
+
 
 
 app.post("/register", async (req, res) => {
@@ -444,6 +449,24 @@ app.post("/recipes/save", async (req, res) => {
     res.send("Could not save recipe");
   }
 });
+
+app.post("/like-recipe", async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+
+  try {
+    await Recipe.findByIdAndUpdate(req.body.recipeId, {
+      liked: true
+    });
+
+    res.redirect("/liked-recipes");
+  } catch (err) {
+    console.log(err);
+    res.send("Error liking recipe");
+  }
+});
+
 app.get("/liked-recipes", async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/");
@@ -479,6 +502,7 @@ app.post("/delete-item", async (req, res) => {
     res.send("Error deleting item");
   }
 });
+
 app.post("/decrease-quantity", async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/");

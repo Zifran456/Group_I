@@ -175,13 +175,6 @@ if (itemNameInput && imagePreview && imageUrlInput) {
 
       imageUrlInput.value = imageUrl;
 
-      // imagePreview.innerHTML = `
-      //   <img 
-      //     src="${imageUrl}" 
-      //     alt=""
-      //     style="width:100%; height:100%; object-fit:cover; border-radius:12px;"
-      //   >
-      // `;
     }, 300);
   });
 }
@@ -215,19 +208,19 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       meals.slice(0, 3).forEach(meal => {
-        recipeGrid.innerHTML += `
-          <div class="recipe-thumb" style="min-width:120px;">
-            <img 
-              src="${meal.strMealThumb}" 
-              alt="${meal.strMeal}"
-              style="width:100%; height:100px; object-fit:cover; border-radius:12px;"
-            >
-            <div style="margin-top:6px; font-size:0.85rem; text-align:center;">
-              ${meal.strMeal}
-            </div>
-          </div>
-        `;
-      });
+       recipeGrid.innerHTML += `
+    <a href="/recipe-suggestions" style="text-decoration:none; color:inherit;">
+      <div class="recipe-thumb" style="min-width:120px;">
+        <img 
+          src="${meal.strMealThumb}" 
+          alt="${meal.strMeal}"
+          style="width:100%; height:100px; object-fit:cover; border-radius:12px;"
+        >
+        
+      </div>
+    </a>
+  `;
+});
     })
     .catch(err => {
       console.error("Recipe error:", err);

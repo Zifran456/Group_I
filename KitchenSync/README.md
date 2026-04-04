@@ -35,15 +35,19 @@ kitchensync/
 ## Page Flow (User Journey)
 ```
 index.html (Welcome)
-  └──> login.html (Sign In)
-         ├──> register.html (Create Account)
-         └──> dashboard.html (Main Dashboard)
-                ├──> recipes.html (Browse Recipes)
-                ├──> liked-recipes.html (Liked Recipes)
-                ├──> fridge.html (Fridge Storage)
-                ├──> pantry.html (Pantry Storage)
-                ├──> freezer.html (Freezer Storage)
-                └──> add-item.html (Add New Item)
+  └──> login.ejs (Sign In)
+         ├──> register.ejs (Create Account)
+         └──> dashboard.ejs (Main Dashboard)
+                ├──> recipes.ejs (Browse Recipes)
+                ├──> liked-recipes.ejs (Liked Recipes)
+                ├──> fridge.ejs (Fridge Storage)
+                ├──> pantry.ejs (Pantry Storage)
+                ├──> freezer.ejs (Freezer Storage)
+                └──> add-item.ejs (Add New Item)
+                └──> add-recipe.ejs (Add Recipe Item)
+                └──> liked-recipes.ejs (Check liked recipes)
+                └──> recipe.ejs (check all recipes)
+                └──> recipe-suggestions.ejs(Shows suggestion from the API)
 ```
 
 ## Technology Stack
@@ -71,3 +75,17 @@ index.html (Welcome)
 - Implement actual CRUD operations
 - Add EJS templating to replace static HTML
 - Wire up notification system for expiry alerts
+
+## How To Run The Code
+- Ensure your Mongo is connected
+- Install the following extenseion 
+    └──>npm install axios
+    └──>npm install init
+    └──>npm install passport-local-mongoose
+    └──>npm install express ejs mongoose
+    └──>npm install dotenv
+    └──>npm install passport
+    └──>npm install passport-local
+    └──>npm express-session
+-After that direct directory and ensure you are in Kitchen Sync folder
+-Then launch node server.js
