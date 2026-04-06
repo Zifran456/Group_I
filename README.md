@@ -52,6 +52,3 @@ Our main audience includes:
 MVP complete. Backend integrated with Express, MongoDB, and EJS views.
 
 ---
-### Not Yet Implemented
-- "Forgot your password?" link (no reset flow)
-- Food item images (placeholder icons only)
