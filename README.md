@@ -8,7 +8,7 @@ This repository contains all documents and source code for the ENSE 281 Group Pr
 
 ## Project Introduction & Background 📝
 
-This web application aims to reduce household food waste and aid in decision making by creating a system that provides its users with various recipes and the tools to track food inventory whilst alerting them to food expiration dates and periods.
+This web application aims to reduce household food waste and aid in decision making by creating a system that provides its users with various recipes and the tools to track food inventory whilst simultanaously allowing them to track food expiration dates.
 
 ## Business Opportunity 📍
 
@@ -17,9 +17,10 @@ The project will allow users to keep track of their food inventory and give user
 ## Minimum Viable Product (MVP) 💻
 
 This web application will allow for:
-* Users to input grocery items
-* Users to browse, filter and save recipes
-* Notifications to users on when their items will expire
+* Users to input any food items into any designated storages
+* Users to rack expiry dates on their food items
+* Users to receive recipe suggestions based on food items stored and/or items nearing expiry date
+* Users to browse and save recipes
 
 ## Intended Impact 🕖
 
@@ -174,21 +175,17 @@ kitchensync/
 
 ### Working
 - User registration and login
-- Session-based authentication — all routes protected
 - Add, edit, and delete food items with name, quantity, storage, and expiry date
 - Dashboard overview stats (Total Items, Expired, Expiring Soon, Low Stock)
 - Filter tabs (All / Expired / Expiring Soon / Low Stock)
 - Built-in storage pages (Fridge, Freezer, Pantry) with expiry colour coding
 - Custom storages — create and name your own storage locations
-- Item status calculated server-side based on expiry date:
+- Item status based on expiry date:
   - **Expired** — past expiry date (red left border)
   - **Expiring Soon** — within 7 days (orange left border)
   - **Good** — more than 7 days out (green left border)
 - Low Stock — items with quantity ≤ 2
-- Back navigation is context-aware
+- Back navigation
 - Search filtering on all storage pages
 - Responsive layout (mobile, tablet, desktop)
-
-### UI Only (not yet wired to backend)
-- Recipe pages — static content, no database connection
-- Liked recipes — no save/unsave functionality
+- Sign out
