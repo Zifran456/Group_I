@@ -19,6 +19,7 @@ The project will allow users to keep track of their food inventory and give user
 This web application will allow for:
 * Users to input any food items into any designated storages
 * Users to track expiry dates on their food items
+* Users to receive in-app notifications on their items that are expiring soon and items that have expired
 * Users to receive recipe suggestions based on food items stored and/or items nearing expiry date
 * Users to browse and save recipes
 
@@ -171,8 +172,8 @@ GET /auth/logout ──> /login
   - **Good** — more than 7 days out, or no expiry date set (green left border)
 - Low Stock — items with quantity ≤ 2
 - In-app notification bell (top nav) — shows a count badge and dropdown listing:
-  - Expiring items: "Your [Item] is expiring soon — see recipe suggestions"
-  - Expired items: "Your [Item] has expired — consider removing them"
+  - Any items that are expiring soon
+  - Any items that have expired
 - Recipe suggestions on dashboard (top 3, scored by expiring items first)
 - Full recipe page — browse all suggested recipes with matched ingredient chips
 - Recipe detail modal — view full ingredients list and step-by-step instructions
@@ -184,5 +185,5 @@ GET /auth/logout ──> /login
 - Sign out
 
 ### Not Yet Implemented
-- User authentication (out of scope for current phase)
+- User authentication 
 - Food item images (placeholder icons only)
