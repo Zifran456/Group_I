@@ -16,7 +16,7 @@
     <div class="top-nav">
       <div class="top-nav-left">
         <a href="/" class="ks-logo" style="font-size:1.4rem;">KS</a>
-        <div class="user-avatar">
+        <div class="user-avatar" style="margin-left:0.75rem;">
           <i class="bi bi-person-fill" style="font-size:1.4rem; color:#999;"></i>
         </div>
         <span class="username"><%= username %></span>
@@ -106,6 +106,12 @@
             </div>
           <% }) %>
         </div>
+        <% if (expired.length > 0) { %>
+          <div style="margin-top:1rem; padding:0.75rem 1rem; background:#FDE8E8; border:1px solid #F5C2C2; border-radius:8px; color:#B91C1C; font-size:0.875rem;">
+            <i class="bi bi-exclamation-triangle-fill" style="margin-right:0.4rem;"></i>
+            <strong>Some items in your storage have expired</strong> — consider throwing them away.
+          </div>
+        <% } %>
       <% } %>
     </div>
 
@@ -137,6 +143,10 @@
               </form>
             </div>
           <% }) %>
+        </div>
+        <div style="margin-top:1rem; padding:0.75rem 1rem; background:#FDE8E8; border:1px solid #F5C2C2; border-radius:8px; color:#B91C1C; font-size:0.875rem;">
+          <i class="bi bi-exclamation-triangle-fill" style="margin-right:0.4rem;"></i>
+          <strong>These Need to Go!</strong> — consider throwing them away.
         </div>
       <% } %>
     </div>
