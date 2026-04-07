@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const methodOverride = require('method-override');
@@ -7,6 +8,8 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(helmet({ contentSecurityPolicy: false }));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
@@ -32,7 +35,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'kitchensync-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 day
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true
+  }
 }));
 
 // Routes
