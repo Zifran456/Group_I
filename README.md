@@ -53,6 +53,21 @@ MVP complete. Backend integrated with Express, MongoDB Atlas, and EJS views.
 
 ---
 
+## Technology Stack
+
+| Layer | Technology |
+|---|---|
+| Runtime | Node.js |
+| Framework | Express 4 |
+| Templating | EJS |
+| Database | MongoDB Atlas + Mongoose |
+| Auth | express-session + bcrypt password hashing |
+| Frontend CSS | Bootstrap 5.3.3 + custom style.css |
+| Frontend JS | Vanilla JavaScript |
+| Icons | Bootstrap Icons 1.11.3 |
+
+---
+
 ## File Structure
 
 ```
