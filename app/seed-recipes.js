@@ -12,11 +12,9 @@ const mongoose = require('mongoose');
 const Recipe   = require('./models/Recipe');
 
 const recipes = [
-  // ── BREAKFAST ─────────────────────────────────────────────────────────────
   {
     name: 'Scrambled Eggs',
     description: 'Quick and fluffy scrambled eggs — great for any meal of the day.',
-    category: 'breakfast',
     keywords: ['egg', 'butter', 'milk'],
     ingredients: ['2–3 eggs', '1 tbsp butter', 'splash of milk', 'salt and pepper to taste'],
     steps: [
@@ -30,7 +28,6 @@ const recipes = [
   {
     name: 'Bacon and Eggs',
     description: 'A classic breakfast combo that never gets old.',
-    category: 'breakfast',
     keywords: ['bacon', 'egg', 'butter'],
     ingredients: ['2–3 strips of bacon', '2 eggs', 'butter (optional)', 'salt and pepper'],
     steps: [
@@ -43,7 +40,6 @@ const recipes = [
   {
     name: 'French Toast',
     description: 'Thick, custardy bread slices pan-fried to golden perfection.',
-    category: 'breakfast',
     keywords: ['bread', 'egg', 'milk', 'butter', 'maple syrup'],
     ingredients: ['2 slices of bread', '1 egg', '¼ cup milk', '1 tbsp butter', 'maple syrup or honey to serve', 'pinch of cinnamon (optional)'],
     steps: [
@@ -57,7 +53,6 @@ const recipes = [
   {
     name: 'Oatmeal with Berries',
     description: 'Warm, hearty oats topped with fresh or frozen berries.',
-    category: 'breakfast',
     keywords: ['oat', 'berry', 'strawberry', 'raspberry', 'milk', 'honey', 'banana', 'maple syrup'],
     ingredients: ['½ cup oats', '1 cup milk or water', 'handful of berries (fresh or frozen)', 'honey or maple syrup to taste'],
     steps: [
@@ -70,7 +65,6 @@ const recipes = [
   {
     name: 'Yogurt Parfait',
     description: 'Layers of creamy yogurt, fresh berries, and crunchy oats.',
-    category: 'breakfast',
     keywords: ['yogurt', 'berry', 'strawberry', 'raspberry', 'oat', 'honey', 'maple syrup'],
     ingredients: ['1 cup yogurt', 'handful of berries', '¼ cup oats', 'drizzle of honey'],
     steps: [
@@ -83,7 +77,6 @@ const recipes = [
   {
     name: 'Smoothie',
     description: 'Blend whatever fruits and dairy you have for a quick nutritious drink.',
-    category: 'breakfast',
     keywords: ['berry', 'strawberry', 'raspberry', 'mango', 'yogurt', 'milk', 'banana', 'protein powder', 'chia', 'spinach', 'flax'],
     ingredients: ['1 cup mixed berries or mango chunks', '½ cup yogurt or milk', '1 banana (optional)', '1 scoop protein powder (optional)', '1 tsp chia seeds (optional)'],
     steps: [
@@ -95,7 +88,6 @@ const recipes = [
   {
     name: 'Pancakes',
     description: 'Fluffy homemade pancakes from pantry staples.',
-    category: 'breakfast',
     keywords: ['flour', 'egg', 'milk', 'butter', 'sugar', 'baking powder', 'maple syrup', 'honey'],
     ingredients: ['1 cup all-purpose flour', '1 egg', '1 cup milk', '2 tbsp sugar', '1 tsp baking powder', '2 tbsp melted butter', 'maple syrup to serve'],
     steps: [
@@ -110,7 +102,6 @@ const recipes = [
   {
     name: 'Spinach and Egg Omelette',
     description: 'Protein-packed omelette — a great way to use up wilting spinach.',
-    category: 'breakfast',
     keywords: ['egg', 'spinach', 'cheese', 'butter', 'mushroom'],
     ingredients: ['3 eggs', '1 cup fresh spinach', '¼ cup shredded cheese (any kind)', '1 tbsp butter', 'salt and pepper'],
     steps: [
@@ -124,7 +115,6 @@ const recipes = [
   {
     name: 'Breakfast Burrito',
     description: 'Eggs, cheese, and salsa wrapped in a warm tortilla.',
-    category: 'breakfast',
     keywords: ['egg', 'tortilla', 'cheese', 'salsa', 'bacon', 'sour cream'],
     ingredients: ['2 eggs', '1 large tortilla', '¼ cup shredded cheese', 'salsa', '2 strips bacon (optional)', 'sour cream (optional)'],
     steps: [
@@ -137,7 +127,6 @@ const recipes = [
   {
     name: 'Avocado Toast with Egg',
     description: 'Simple, filling breakfast using bread and eggs.',
-    category: 'breakfast',
     keywords: ['bread', 'egg', 'butter', 'bagel'],
     ingredients: ['2 slices bread or a bagel', '1–2 eggs', 'salt, pepper, red pepper flakes (optional)'],
     steps: [
@@ -147,11 +136,9 @@ const recipes = [
       'Eat immediately.'
     ]
   },
-  // ── LUNCH ─────────────────────────────────────────────────────────────────
   {
     name: 'Grilled Cheese Sandwich',
     description: 'Crispy, buttery bread with melted cheese — a comfort classic.',
-    category: 'lunch',
     keywords: ['bread', 'cheese', 'butter', 'cheddar', 'parmesan', 'bagel'],
     ingredients: ['2 slices of bread', 'slices of cheese (cheddar or any melting cheese)', '1 tbsp butter'],
     steps: [
@@ -165,7 +152,6 @@ const recipes = [
   {
     name: 'Tuna Salad',
     description: 'Quick tuna salad that works in a sandwich, on crackers, or by itself.',
-    category: 'lunch',
     keywords: ['tuna', 'mayo', 'mayonnaise', 'bread', 'cracker'],
     ingredients: ['1 can tuna (drained)', '2 tbsp mayonnaise', 'salt and pepper', 'bread or crackers to serve'],
     steps: [
@@ -177,7 +163,6 @@ const recipes = [
   {
     name: 'Cheese Quesadilla',
     description: 'Crispy tortillas with melted cheese — top with salsa and you\'re done.',
-    category: 'lunch',
     keywords: ['tortilla', 'cheese', 'salsa', 'cheddar', 'sour cream'],
     ingredients: ['2 flour tortillas', '½ cup shredded cheese', 'salsa to serve', 'sour cream (optional)'],
     steps: [
@@ -190,7 +175,6 @@ const recipes = [
   {
     name: 'Hummus and Crackers',
     description: 'Easy no-cook snack — great for when you need something quick.',
-    category: 'snack',
     keywords: ['hummus', 'cracker', 'olive', 'pita'],
     ingredients: ['½ cup hummus', 'crackers or pita bread', 'olives (optional)'],
     steps: [
@@ -199,11 +183,9 @@ const recipes = [
       'Top hummus with olives if you have them. Dip and enjoy.'
     ]
   },
-  // ── DINNER ────────────────────────────────────────────────────────────────
   {
     name: 'Pasta with Tomato Sauce',
     description: 'Simple, satisfying pasta — just pantry staples needed.',
-    category: 'dinner',
     keywords: ['pasta', 'canned tomato', 'tomato', 'pasta sauce', 'olive oil'],
     ingredients: ['2 cups dried pasta', '1 can canned tomatoes or jar of pasta sauce', '1 tbsp olive oil', 'salt and pepper', 'parmesan to top (optional)'],
     steps: [
@@ -217,7 +199,6 @@ const recipes = [
   {
     name: 'Pesto Pasta',
     description: 'Two-ingredient magic — just pasta and pesto.',
-    category: 'dinner',
     keywords: ['pasta', 'pesto', 'parmesan'],
     ingredients: ['2 cups dried pasta', '3–4 tbsp pesto', 'parmesan to top (optional)'],
     steps: [
@@ -230,7 +211,6 @@ const recipes = [
   {
     name: 'Shrimp Pasta',
     description: 'Quick shrimp and pasta dinner with just butter and a few pantry staples.',
-    category: 'dinner',
     keywords: ['shrimp', 'pasta', 'butter', 'olive oil', 'parsley', 'cilantro'],
     ingredients: ['2 cups pasta', '1 cup frozen shrimp (thawed)', '2 tbsp butter', '1 tbsp olive oil', 'salt and pepper', 'parsley (optional)'],
     steps: [
@@ -243,7 +223,6 @@ const recipes = [
   {
     name: 'Fried Rice',
     description: 'Use up leftover rice with eggs, frozen veggies, and whatever else you have.',
-    category: 'dinner',
     keywords: ['rice', 'egg', 'corn', 'pea', 'butter', 'leftover'],
     ingredients: ['2 cups cooked rice (day-old is best)', '2 eggs', '½ cup frozen peas or corn', '1 tbsp butter or oil', 'soy sauce to taste'],
     steps: [
@@ -257,7 +236,6 @@ const recipes = [
   {
     name: 'Chicken Stir Fry',
     description: 'Quick chicken with veggies over rice — a reliable weeknight staple.',
-    category: 'dinner',
     keywords: ['chicken', 'corn', 'pea', 'mushroom', 'rice', 'spinach', 'broth'],
     ingredients: ['1 chicken breast or thigh (sliced)', '1 cup mixed vegetables (peas, corn, mushrooms, spinach)', 'cooked rice to serve', '1 tbsp oil', 'soy sauce to taste'],
     steps: [
@@ -270,7 +248,6 @@ const recipes = [
   {
     name: 'Beef Tacos',
     description: 'Simple ground beef tacos with cheese and salsa.',
-    category: 'dinner',
     keywords: ['ground beef', 'beef', 'tortilla', 'salsa', 'cheese', 'sour cream'],
     ingredients: ['½ lb ground beef', '4 flour tortillas', '½ cup shredded cheese', 'salsa', 'sour cream (optional)'],
     steps: [
@@ -283,7 +260,6 @@ const recipes = [
   {
     name: 'Chicken Noodle Soup',
     description: 'Warm, comforting soup — great for using up chicken and broth.',
-    category: 'dinner',
     keywords: ['chicken', 'broth', 'noodle', 'egg noodle', 'parsley', 'cilantro'],
     ingredients: ['1 cup cooked or raw chicken (shredded or sliced)', '4 cups chicken broth', '1 cup egg noodles or any pasta', 'salt and pepper', 'parsley to garnish (optional)'],
     steps: [
@@ -296,7 +272,6 @@ const recipes = [
   {
     name: 'Lentil Soup',
     description: 'Hearty and warming — lentils are a true pantry hero.',
-    category: 'dinner',
     keywords: ['lentil', 'broth', 'canned tomato', 'tomato', 'olive oil'],
     ingredients: ['1 cup dried lentils', '4 cups broth', '1 can canned tomatoes', '1 tbsp olive oil', 'salt, pepper, cumin (optional)'],
     steps: [
@@ -309,7 +284,6 @@ const recipes = [
   {
     name: 'Chili',
     description: 'One-pot chili using canned beans, tomatoes, and whatever protein you have.',
-    category: 'dinner',
     keywords: ['black bean', 'bean', 'chickpea', 'canned tomato', 'tomato', 'chili', 'ground beef', 'beef', 'corn', 'broth'],
     ingredients: ['1 can black beans or kidney beans (drained)', '1 can canned tomatoes', '½ lb ground beef (optional)', '1 can corn (optional)', 'chili powder, cumin, salt'],
     steps: [
@@ -322,7 +296,6 @@ const recipes = [
   {
     name: 'Pan-Seared Salmon',
     description: 'Simple salmon with butter and herbs — restaurant quality in 10 minutes.',
-    category: 'dinner',
     keywords: ['salmon', 'butter', 'parsley', 'cilantro', 'olive oil'],
     ingredients: ['1–2 salmon fillets', '1 tbsp butter', '1 tbsp olive oil', 'salt and pepper', 'parsley or cilantro to garnish'],
     steps: [
@@ -336,7 +309,6 @@ const recipes = [
   {
     name: 'Mushroom Risotto',
     description: 'Creamy rice with mushrooms — more impressive than it sounds.',
-    category: 'dinner',
     keywords: ['mushroom', 'rice', 'broth', 'butter', 'parmesan', 'olive oil'],
     ingredients: ['1 cup rice (arborio is ideal but any works)', '2 cups mushrooms (sliced)', '3 cups warm broth', '2 tbsp butter', '¼ cup parmesan (optional)'],
     steps: [
@@ -350,7 +322,6 @@ const recipes = [
   {
     name: 'Tofu Scramble',
     description: 'A hearty plant-based scramble — a great way to use up firm tofu.',
-    category: 'dinner',
     keywords: ['tofu', 'spinach', 'mushroom', 'olive oil'],
     ingredients: ['1 block firm tofu', '1 cup spinach', '1 cup mushrooms (sliced)', '1 tbsp olive oil', 'soy sauce, salt, pepper, turmeric (optional)'],
     steps: [
@@ -364,7 +335,6 @@ const recipes = [
   {
     name: 'Steak with Garlic Butter',
     description: 'Simple pan-seared steak — a special meal with minimal ingredients.',
-    category: 'dinner',
     keywords: ['steak', 'butter', 'parsley'],
     ingredients: ['1 steak (any cut)', '2 tbsp butter', 'salt and pepper', 'parsley to garnish'],
     steps: [
@@ -378,7 +348,6 @@ const recipes = [
   {
     name: 'Chickpea Curry',
     description: 'Filling plant-based curry entirely from pantry staples.',
-    category: 'dinner',
     keywords: ['chickpea', 'canned tomato', 'tomato', 'coconut oil', 'broth', 'olive oil', 'rice'],
     ingredients: ['1 can chickpeas (drained)', '1 can canned tomatoes', '1 tbsp coconut oil or olive oil', 'curry powder, cumin, salt', 'rice to serve'],
     steps: [
@@ -391,7 +360,6 @@ const recipes = [
   {
     name: 'Canned Salmon Patties',
     description: 'Quick pan-fried patties from canned salmon — crispy and satisfying.',
-    category: 'dinner',
     keywords: ['salmon', 'egg', 'cracker', 'mayo', 'mayonnaise', 'parsley', 'cilantro'],
     ingredients: ['1 can salmon (drained)', '1 egg', '¼ cup crushed crackers', '2 tbsp mayo', 'parsley or cilantro (optional)', 'a little oil for frying'],
     steps: [
@@ -401,11 +369,9 @@ const recipes = [
       'Cook patties 3 minutes per side until golden. Serve hot.'
     ]
   },
-  // ── SNACK / DESSERT ───────────────────────────────────────────────────────
   {
     name: 'Banana Oat Cookies',
     description: 'Two-ingredient cookies with zero added sugar — easy and delicious.',
-    category: 'snack',
     keywords: ['oat', 'banana', 'honey', 'almond', 'chia', 'maple syrup'],
     ingredients: ['2 ripe bananas', '1 cup oats', 'honey or maple syrup (optional)', 'chopped almonds or chia seeds (optional)'],
     steps: [
@@ -419,7 +385,6 @@ const recipes = [
   {
     name: 'Trail Mix',
     description: 'No-cook snack — combine whatever nuts and seeds you have.',
-    category: 'snack',
     keywords: ['walnut', 'almond', 'chia', 'flax', 'protein powder', 'oat'],
     ingredients: ['¼ cup walnuts', '¼ cup almonds', '1 tbsp chia or flax seeds', 'dried fruit (optional)', 'a few chocolate chips (optional)'],
     steps: [
