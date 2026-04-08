@@ -185,6 +185,5 @@ GET /auth/logout ──> /login
 - Sign out
 
 ### Not Yet Implemented
-- User authentication 
 - Food item images (placeholder icons only)
 - Editing profile/deleting user account
