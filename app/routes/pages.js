@@ -97,7 +97,7 @@ router.get('/dashboard', requireAuth, async (req, res) => {
     const suggestedRecipes = [];
     for (const recipe of allRecipes) {
       const matchedItems = getMatchedItems(userItemsForRecipes, recipe);
-      if (matchedItems.length === 0) continue;
+      if (matchedItems.length < 2) continue;
       const hasExpiring = matchedItems.some(i => i.status === 'expiring');
       const score       = recipeScore(matchedItems);
       suggestedRecipes.push({ ...recipe, matchedItems, hasExpiring, score });
@@ -191,7 +191,7 @@ router.get('/recipes', requireAuth, async (req, res) => {
     const matched = [];
     for (const recipe of allRecipes) {
       const matchedItems = getMatchedItems(userItems, recipe);
-      if (matchedItems.length === 0) continue;
+      if (matchedItems.length < 2) continue;
 
       const hasExpiring = matchedItems.some(i => i.status === 'expiring');
       const score       = recipeScore(matchedItems);
