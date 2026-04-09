@@ -41,11 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var itemImageTimer;
 
   if (itemNameInput && itemImagePreview) {
-    // Pre-load image if item name is already filled (edit-item page)
-    if (itemNameInput.value.trim()) {
-      itemNameInput.dispatchEvent(new Event('input'));
-    }
-
     itemNameInput.addEventListener('input', function () {
       clearTimeout(itemImageTimer);
       var name = this.value.trim();
@@ -72,6 +67,11 @@ document.addEventListener('DOMContentLoaded', function () {
         itemImagePreview.src = url;
       }, 500);
     });
+
+    // Pre-load image if item name is already filled (edit-item page)
+    if (itemNameInput.value.trim()) {
+      itemNameInput.dispatchEvent(new Event('input'));
+    }
   }
 
   // ============================================

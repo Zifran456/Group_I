@@ -55,9 +55,9 @@
         </div>
         <input type="hidden" id="storageValue" name="storage" value="<%= item.storage %>">
 
-        <label for="expiryDate">Expiration Date</label>
+        <label for="expiryDate">Expiration Date <span style="font-weight:400; color:#888; font-size:0.85em;">(optional)</span></label>
         <input type="date" class="form-control <%= expiryValue ? '' : 'date-empty' %>"
-          id="expiryDate" name="expiryDate" value="<%= expiryValue %>" required>
+          id="expiryDate" name="expiryDate" value="<%= expiryValue %>">
 
         <input type="hidden" name="back" value="<%= back %>">
 
