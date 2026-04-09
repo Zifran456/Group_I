@@ -250,14 +250,14 @@ GET /auth/logout ──> /
 
 ### Considerations for Future MVP
 
-**Functionality**
+**Functionality:**
 - Editing profile / deleting user account
 - Push or email notifications for expiring items (currently only visible in-app)
-- Barcode / UPC scanning to add items quickly
+- Barcode scanning to add items quickly
 - Manual recipe entry (user-submitted recipes, not just MealDB)
 - Meal planning / weekly planner view
 
-**Other**
-- Item image override — MealDB thumbnails don't always match the item name
+**Other:**
+- Item image uploads — MealDB thumbnails don't always match the item name
 - Sorting and filtering options on storage pages (currently only search)
 - Quantity units (e.g. "500g" vs just "2")
