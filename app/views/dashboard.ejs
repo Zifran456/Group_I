@@ -131,7 +131,10 @@
           <% allItems.forEach(function(item) { %>
             <div class="item-card <%= item.borderClass %>">
               <div class="item-image">
-                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC;"></i>
+                <img src="https://www.themealdb.com/images/ingredients/<%= encodeURIComponent(item.name) %>-Small.png"
+                     alt="<%= item.name %>"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='';">
+                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC; display:none;"></i>
               </div>
               <div class="item-info">
                 <div class="item-name"><%= item.name %></div>
@@ -163,7 +166,10 @@
           <% expired.forEach(function(item) { %>
             <div class="item-card border-red">
               <div class="item-image">
-                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC;"></i>
+                <img src="https://www.themealdb.com/images/ingredients/<%= encodeURIComponent(item.name) %>-Small.png"
+                     alt="<%= item.name %>"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='';">
+                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC; display:none;"></i>
               </div>
               <div class="item-info">
                 <div class="item-name"><%= item.name %></div>
@@ -199,7 +205,10 @@
           <% expiring.forEach(function(item) { %>
             <div class="item-card border-orange">
               <div class="item-image">
-                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC;"></i>
+                <img src="https://www.themealdb.com/images/ingredients/<%= encodeURIComponent(item.name) %>-Small.png"
+                     alt="<%= item.name %>"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='';">
+                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC; display:none;"></i>
               </div>
               <div class="item-info">
                 <div class="item-name"><%= item.name %></div>
@@ -231,7 +240,10 @@
           <% lowStock.forEach(function(item) { %>
             <div class="item-card <%= item.borderClass %>">
               <div class="item-image">
-                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC;"></i>
+                <img src="https://www.themealdb.com/images/ingredients/<%= encodeURIComponent(item.name) %>-Small.png"
+                     alt="<%= item.name %>"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='';">
+                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC; display:none;"></i>
               </div>
               <div class="item-info">
                 <div class="item-name"><%= item.name %></div>
@@ -273,8 +285,12 @@
                 <i class="bi <%= recipe.liked ? 'bi-heart-fill' : 'bi-heart' %>"></i>
               </button>
 
-              <div class="recipe-card-image" style="background: <%= recipe.hasExpiring ? '#FFF8EC' : '' %>;">
-                <i class="bi bi-image" style="font-size:2rem; color:<%= recipe.hasExpiring ? 'var(--orange-expiring)' : '#CCC' %>;"></i>
+              <div class="recipe-card-image" style="<%= recipe.thumbnail ? 'padding:0; overflow:hidden;' : recipe.hasExpiring ? 'background:#FFF8EC;' : '' %>">
+                <% if (recipe.thumbnail) { %>
+                  <img src="<%= recipe.thumbnail %>/preview" alt="<%= recipe.name %>" style="width:100%; height:100%; object-fit:cover;">
+                <% } else { %>
+                  <i class="bi bi-image" style="font-size:2rem; color:<%= recipe.hasExpiring ? 'var(--orange-expiring)' : '#CCC' %>;"></i>
+                <% } %>
               </div>
               <div class="recipe-card-info">
                 <h5 style="margin:0.2rem 0 0.3rem; font-size:1rem;"><%= recipe.name %></h5>
@@ -381,6 +397,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <img id="modalThumbnail" src="" alt="" style="display:none; width:100%; border-radius:8px; margin-bottom:1rem; object-fit:cover; max-height:200px;">
           <p id="modalDescription" style="color:#555; font-size:0.9rem; margin-bottom:1rem;"></p>
           <div id="modalMatchedItems" style="margin-bottom:1rem;"></div>
           <h6 style="font-weight:700; margin-bottom:0.5rem;">Ingredients</h6>

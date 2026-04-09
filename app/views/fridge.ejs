@@ -40,7 +40,10 @@
           <% items.forEach(function(item) { %>
             <div class="item-card searchable-item <%= item.borderClass %>">
               <div class="item-image">
-                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC;"></i>
+                <img src="https://www.themealdb.com/images/ingredients/<%= encodeURIComponent(item.name) %>-Small.png"
+                     alt="<%= item.name %>"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='';">
+                <i class="bi bi-image" style="font-size:1.5rem; color:#CCC; display:none;"></i>
               </div>
               <div class="item-info">
                 <div class="item-name"><%= item.name %></div>

@@ -28,8 +28,9 @@
       <!-- Form POSTs to /items on the server -->
       <form id="addItemForm" action="/items" method="POST">
 
-        <div class="image-placeholder">
-          <i class="bi bi-image"></i>
+        <div class="image-placeholder" id="itemImageBox">
+          <i class="bi bi-image" id="itemImageIcon"></i>
+          <img id="itemImagePreview" src="" alt="" style="display:none; width:100%; height:100%; object-fit:contain; border-radius:10px;">
         </div>
 
         <label for="itemName">Item Name</label>

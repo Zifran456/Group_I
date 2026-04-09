@@ -30,7 +30,52 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ============================================
-  // 2. QUANTITY CONTROLS (Add Item page)
+  // 2. ITEM IMAGE PREVIEW (Add Item page)
+  //    Fetches ingredient thumbnail from MealDB
+  //    as the user types the item name.
+  // ============================================
+  var itemNameInput    = document.getElementById('itemName');
+  var itemImagePreview = document.getElementById('itemImagePreview');
+  var itemImageIcon    = document.getElementById('itemImageIcon');
+  var itemImageBox     = document.getElementById('itemImageBox');
+  var itemImageTimer;
+
+  if (itemNameInput && itemImagePreview) {
+    // Pre-load image if item name is already filled (edit-item page)
+    if (itemNameInput.value.trim()) {
+      itemNameInput.dispatchEvent(new Event('input'));
+    }
+
+    itemNameInput.addEventListener('input', function () {
+      clearTimeout(itemImageTimer);
+      var name = this.value.trim();
+
+      if (!name) {
+        itemImagePreview.style.display = 'none';
+        itemImageIcon.style.display    = '';
+        itemImageBox.style.border      = '';
+        return;
+      }
+
+      itemImageTimer = setTimeout(function () {
+        var url = 'https://www.themealdb.com/images/ingredients/' + encodeURIComponent(name) + '-Small.png';
+        itemImagePreview.onload = function () {
+          itemImagePreview.style.display = 'block';
+          itemImageIcon.style.display    = 'none';
+          itemImageBox.style.border      = 'none';
+        };
+        itemImagePreview.onerror = function () {
+          itemImagePreview.style.display = 'none';
+          itemImageIcon.style.display    = '';
+          itemImageBox.style.border      = '';
+        };
+        itemImagePreview.src = url;
+      }, 500);
+    });
+  }
+
+  // ============================================
+  // 3. QUANTITY CONTROLS (Add Item page)
   // ============================================
   var minusBtn      = document.getElementById('quantityMinus');
   var plusBtn       = document.getElementById('quantityPlus');
@@ -47,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================
-  // 3. ASSIGN-TO BUTTONS (Add Item page)
+  // 4. ASSIGN-TO BUTTONS (Add Item page)
   //    Also keeps a hidden <input name="storage"> in sync
   // ============================================
   var assignBtns    = document.querySelectorAll('.assign-btn');
@@ -62,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ============================================
-  // 4. EXPIRY DATE — placeholder colour
+  // 5. EXPIRY DATE — placeholder colour
   // ============================================
   var expiryDate = document.getElementById('expiryDate');
 
@@ -73,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================
-  // 5. SEARCH FILTERING (Storage & Recipe pages)
+  // 6. SEARCH FILTERING (Storage & Recipe pages)
   // ============================================
   var pageSearchInputs = document.querySelectorAll('.page-search-input');
 
@@ -90,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ============================================
-  // 6. RECIPE DETAIL MODAL
+  // 7. RECIPE DETAIL MODAL
   //    Populated from urgentRecipes / regularRecipes / likedRecipesData
   //    injected by the EJS templates.
   // ============================================
@@ -120,8 +165,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!recipe) return;
 
-        document.getElementById('recipeModalLabel').textContent  = recipe.name;
-        document.getElementById('modalDescription').textContent  = recipe.description;
+        document.getElementById('recipeModalLabel').textContent = recipe.name;
+        document.getElementById('modalDescription').textContent = recipe.description;
+
+        var thumb = document.getElementById('modalThumbnail');
+        if (thumb) {
+          if (recipe.thumbnail) {
+            thumb.src          = recipe.thumbnail + '/preview';
+            thumb.alt          = recipe.name;
+            thumb.style.display = 'block';
+          } else {
+            thumb.style.display = 'none';
+          }
+        }
 
         // Matched items chips
         var matchedDiv = document.getElementById('modalMatchedItems');
@@ -171,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================
-  // 7. NOTIFICATION BELL toggle
+  // 8. NOTIFICATION BELL toggle
   // ============================================
   var notifBell  = document.getElementById('notifBell');
   var notifPanel = document.getElementById('notifPanel');
@@ -190,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================
-  // 8. LIKE / UNLIKE RECIPES (fetch, no page reload)
+  // 9. LIKE / UNLIKE RECIPES (fetch, no page reload)
   // ============================================
   var likeBtns = document.querySelectorAll('.like-btn');
 

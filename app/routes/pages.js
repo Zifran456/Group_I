@@ -2,43 +2,9 @@ const express     = require('express');
 const router      = express.Router();
 const Item        = require('../models/Item');
 const Storage     = require('../models/Storage');
-const Recipe      = require('../models/Recipe');
 const LikedRecipe = require('../models/LikedRecipe');
 const requireAuth = require('../middleware/requireAuth');
-
-// Returns true if a user item name matches a recipe keyword.
-// We check both directions so "eggs" matches keyword "egg" and vice versa.
-function itemMatchesKeyword(itemName, keyword) {
-  const name = itemName.toLowerCase().trim();
-  const kw   = keyword.toLowerCase().trim();
-  return name.includes(kw) || kw.includes(name);
-}
-
-// Given all of the user's items and one recipe, return the subset of non-expired
-// items that match at least one keyword. Expired items are excluded entirely.
-function getMatchedItems(userItems, recipe) {
-  const matched = [];
-  const seen = new Set();
-  for (const item of userItems) {
-    if (item.status === 'expired') continue;  // skip expired items
-    for (const kw of recipe.keywords) {
-      if (itemMatchesKeyword(item.name, kw) && !seen.has(String(item._id))) {
-        seen.add(String(item._id));
-        matched.push({ name: item.name, status: item.status });
-        break;
-      }
-    }
-  }
-  return matched;
-}
-
-// Score a recipe for sorting: expiring items rank above good.
-function recipeScore(matchedItems) {
-  return matchedItems.reduce((sum, i) => {
-    if (i.status === 'expiring') return sum + 2;
-    return sum + 1;
-  }, 0);
-}
+const { getSuggestedRecipes, lookupMeal, extractIngredients, parseSteps, getMatchedItemsForMeal } = require('../utils/mealdb');
 
 // Helper: add display fields to a plain item object
 function decorateItem(item) {
@@ -78,13 +44,12 @@ router.get('/dashboard', requireAuth, async (req, res) => {
   sevenDays.setDate(sevenDays.getDate() + 7);
 
   try {
-    const [rawItems, expiredCount, expiringSoonCount, lowStockCount, customStorages, allRecipes, likedDocs] = await Promise.all([
+    const [rawItems, expiredCount, expiringSoonCount, lowStockCount, customStorages, likedDocs] = await Promise.all([
       Item.find({ userId }).sort({ createdAt: -1 }),
       Item.countDocuments({ userId, expiryDate: { $lt: today } }),
       Item.countDocuments({ userId, expiryDate: { $gte: today, $lte: sevenDays } }),
       Item.countDocuments({ userId, quantity: { $lte: 2 } }),
       Storage.find({ userId }).sort({ createdAt: 1 }),
-      Recipe.find().lean(),
       LikedRecipe.find({ userId }).lean()
     ]);
 
@@ -93,19 +58,10 @@ router.get('/dashboard', requireAuth, async (req, res) => {
     const expiring = allItems.filter(i => i.status === 'expiring');
     const lowStock = allItems.filter(i => i.quantity <= 2);
 
-    // Build top 3 recipe suggestions (same logic as /recipes)
     const userItemsForRecipes = rawItems.map(i => i.toObject({ virtuals: true }));
-    const likedIds = new Set(likedDocs.map(l => String(l.recipeId)));
-    const suggestedRecipes = [];
-    for (const recipe of allRecipes) {
-      const matchedItems = getMatchedItems(userItemsForRecipes, recipe);
-      if (matchedItems.length < 2) continue;
-      const hasExpiring = matchedItems.some(i => i.status === 'expiring');
-      const score       = recipeScore(matchedItems);
-      suggestedRecipes.push({ ...recipe, matchedItems, hasExpiring, score, liked: likedIds.has(String(recipe._id)) });
-    }
-    suggestedRecipes.sort((a, b) => b.score - a.score);
-    const topRecipes = suggestedRecipes.slice(0, 3);
+    const likedIds   = new Set(likedDocs.map(l => String(l.recipeId)));
+    const allSuggested = await getSuggestedRecipes(userItemsForRecipes, likedIds);
+    const topRecipes   = allSuggested.slice(0, 3);
 
     res.render('dashboard', {
       username:        req.session.username,
@@ -180,42 +136,17 @@ router.get('/pantry', requireAuth, async (req, res) => {
 router.get('/recipes', requireAuth, async (req, res) => {
   try {
     const userId = req.session.userId;
-    const [rawItems, allRecipes, likedDocs] = await Promise.all([
+    const [rawItems, likedDocs] = await Promise.all([
       Item.find({ userId }),
-      Recipe.find().lean(),
       LikedRecipe.find({ userId }).lean()
     ]);
-
-    // Attach virtual status to every item
     const userItems = rawItems.map(i => i.toObject({ virtuals: true }));
-
-    const likedIds = new Set(likedDocs.map(l => String(l.recipeId)));
-
-    // Build matched recipe objects
-    const matched = [];
-    for (const recipe of allRecipes) {
-      const matchedItems = getMatchedItems(userItems, recipe);
-      if (matchedItems.length < 2) continue;
-
-      const hasExpiring = matchedItems.some(i => i.status === 'expiring');
-      const score       = recipeScore(matchedItems);
-
-      matched.push({
-        ...recipe,
-        matchedItems,
-        hasExpiring,
-        score,
-        liked: likedIds.has(String(recipe._id))
-      });
-    }
-
-    // Sort: expiring items first, then by match count
-    matched.sort((a, b) => b.score - a.score);
-
-    res.render('recipes', { recipes: matched, totalRecipes: allRecipes.length });
+    const likedIds  = new Set(likedDocs.map(l => String(l.recipeId)));
+    const recipes   = await getSuggestedRecipes(userItems, likedIds);
+    res.render('recipes', { recipes });
   } catch (err) {
     console.error(err);
-    res.render('recipes', { recipes: [], totalRecipes: 0 });
+    res.render('recipes', { recipes: [] });
   }
 });
 
@@ -225,21 +156,34 @@ router.get('/liked-recipes', requireAuth, async (req, res) => {
     const userId = req.session.userId;
     const [rawItems, likedDocs] = await Promise.all([
       Item.find({ userId }),
-      LikedRecipe.find({ userId }).populate('recipeId').lean()
+      LikedRecipe.find({ userId }).lean()
     ]);
+
+    if (likedDocs.length === 0) return res.render('liked-recipes', { recipes: [] });
 
     const userItems = rawItems.map(i => i.toObject({ virtuals: true }));
 
-    const likedRecipes = likedDocs
-      .filter(l => l.recipeId) // guard against deleted recipes
-      .map(l => {
-        const recipe      = l.recipeId;
-        const matchedItems = getMatchedItems(userItems, recipe);
-        const hasExpiring = matchedItems.some(i => i.status === 'expiring');
-        return { ...recipe, matchedItems, hasExpiring, liked: true };
+    const meals = await Promise.all(likedDocs.map(l => lookupMeal(l.recipeId)));
+
+    const recipes = meals
+      .filter(Boolean)
+      .map(full => {
+        const matchedItems = getMatchedItemsForMeal(full, userItems);
+        const hasExpiring  = matchedItems.some(i => i.status === 'expiring');
+        return {
+          _id:         full.idMeal,
+          name:        full.strMeal,
+          description: [full.strCategory, full.strArea].filter(Boolean).join(' · '),
+          thumbnail:   full.strMealThumb,
+          ingredients: extractIngredients(full),
+          steps:       parseSteps(full.strInstructions),
+          matchedItems,
+          hasExpiring,
+          liked:       true
+        };
       });
 
-    res.render('liked-recipes', { recipes: likedRecipes });
+    res.render('liked-recipes', { recipes });
   } catch (err) {
     console.error(err);
     res.render('liked-recipes', { recipes: [] });
